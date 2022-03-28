@@ -1,3 +1,3 @@
-# MiniSiteTemplate
+Snake, ein kleines Spiel.
 
-Website Template für JavaScript Projekte.
+Programmiert mit JavaScript. Als Coding Übung.
