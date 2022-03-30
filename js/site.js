@@ -9,16 +9,23 @@ let food;
 let cellWidth = canvas.width / cols;
 let cellHeight = canvas.height / rows;
 let direction = "LEFT";
-
-placeFood();
-
-setInterval(gameLoop, 500);
-document.addEventListener("keydown", keyMove);
-
-draw();
+let foodCollected = false;
+let punkte = 0;
 
 
-// Funktionen
+// Start Funktion
+function startFunktion(){
+    placeFood();
+
+    interval = setInterval(gameLoop, 200);
+    document.addEventListener("keydown", keyMove);
+
+    draw();
+
+    displayPunkte();
+}
+
+// Zeichnet das Spielfeld
 function draw(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -32,11 +39,50 @@ function draw(){
     requestAnimationFrame(draw);
 }
 
+// Prüft auf Spielabbruch
+function testGameOver(){
+    
+    let firstPart = snake[0];
+    let otherParts = snake.slice(1);
+    let dublicatePart = otherParts.find(part => part.x == firstPart.x && part.y == firstPart.y);
+
+    if(snake[0].x <0 || snake[0].x > cols - 1 || snake[0].y < 0 || snake[0].y > rows - 1 || dublicatePart){
+        punkte = 0;
+        displayPunkte();
+        snake = [ {x:19, y:3} ]
+        direction = "LEFT";   
+        clearInterval(interval);  
+    }
+}
+
+// Fügt Teile zur Schlange dazu
 function add(x, y){
     ctx.fillRect(x * cellWidth, y * cellHeight, cellWidth - 1, cellHeight -1);
 }
 
+// Bewegung der Schlange
+function shiftSnake(){
+    for (let index = snake.length - 1; index > 0; index--) {
+        const part = snake[index];
+        const lastPart = snake[index - 1];
+        part.x = lastPart.x;
+        part.y = lastPart.y;
+    }
+}
+
+// Bewegung der Schlange
 function gameLoop(){
+
+    testGameOver();
+
+    if(foodCollected == true){
+        snake = [ {x: snake[0].x, y: snake[0].y}, ...snake ];
+
+        foodCollected = false;
+    }
+
+    shiftSnake();
+
     if(direction == "LEFT"){
         snake[0].x--;
     }
@@ -54,13 +100,16 @@ function gameLoop(){
     }
 
     if(snake[0].x == food.x && snake[0].y == food.y){
-        // Futter einsammeln
-
+        
+        foodCollected = true;
+        punkte ++;
+        displayPunkte();
         placeFood();
     }
     
 }
 
+// Abfrage für die Steuerung
 function keyMove(e) {
     if(e.keyCode == 37){
         direction = "LEFT";
@@ -79,11 +128,17 @@ function keyMove(e) {
     }
 }
 
+// Plaziert das Essen
 function placeFood() {
     let randomX = Math.floor(Math.random() * cols);
     let randomY = Math.floor(Math.random() * rows);
 
     food = {x: randomX, y: randomY};
 
+}
+
+// Zeigt den Punktestand an
+function displayPunkte(){
+    document.getElementById("punkteAusgabe").innerHTML = "Punktestand: " + punkte;
 }
 

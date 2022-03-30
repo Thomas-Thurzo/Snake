@@ -27,7 +27,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="app.html">Snake</a>
+        <a class="navbar-brand" href="app.html">SNAKE</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -56,11 +56,36 @@
 
     <!-- Main Sektion -->
     <main class="flex-shrink-0">
-        <div class="container d-flex justify-content-center mt-5">
+        <div class="container">
+            
+            <div class="row">
 
-            <canvas id="canvas" width="720" height="480" class="bg-info border border-5 border-success">
+                <!-- Überschrift -->
+                <div class="col-12 d-flex justify-content-center mt-5 mb-3">
+                    <h1 class="display-1 fw-bold text-primary">Snake Game</h1>
+                </div>
 
-            </canvas>
+                <!-- Punktestand -->
+                <div class="col-12 d-flex justify-content-center">
+                    <h2 id="punkteAusgabe">Punktestand: 0</h2>
+                </div>
+
+                <!-- Spielfeld -->
+                <div class="col-12 d-flex justify-content-center">
+                    <canvas id="canvas" width="720" height="480" class="bg-black border border-5 border-secondary"></canvas>
+                </div>
+
+                <!-- Überschrift Button-->
+                <div class="col-12 d-flex justify-content-center mt-3">
+                    <h2>Zum Spielbeginn Start Drücken</h2>
+                </div>
+
+                <!-- Start Button -->
+                <div class="col-12 d-flex justify-content-center mt-3">
+                    <button onclick="startFunktion()" type="button" class="btn btn-success btn-lg">Start</button>
+                </div>
+                
+            </div>
 
         </div>
     </main>
