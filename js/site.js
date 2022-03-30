@@ -25,6 +25,15 @@ function startFunktion(){
     displayPunkte();
 }
 
+// Game Over Funktion
+function gameOver(){
+    document.getElementById("punkteAusgabe").innerHTML = "Game-Over / " + "Punkte: " + punkte;
+    punkte = 0;
+    snake = [ {x:19, y:3} ]
+    direction = "LEFT";   
+    clearInterval(interval); 
+}
+
 // Zeichnet das Spielfeld
 function draw(){
     ctx.fillStyle = "black";
@@ -47,11 +56,7 @@ function testGameOver(){
     let dublicatePart = otherParts.find(part => part.x == firstPart.x && part.y == firstPart.y);
 
     if(snake[0].x <0 || snake[0].x > cols - 1 || snake[0].y < 0 || snake[0].y > rows - 1 || dublicatePart){
-        punkte = 0;
-        displayPunkte();
-        snake = [ {x:19, y:3} ]
-        direction = "LEFT";   
-        clearInterval(interval);  
+         gameOver();
     }
 }
 
